@@ -7,6 +7,7 @@ import inflection
 from folium.plugins import MarkerCluster
 from millify import millify as mil
 from src import transformation as ts
+from src import markdown as mk
 
 st.set_page_config(page_title= 'Countries',
                     layout= 'wide')
@@ -40,7 +41,8 @@ select_country = df1[df1['country_name'].isin(select_country_mult)]
 st.header('🌎 Visão Paises')
 
 with st.container():
-    st.markdown("<h3 style='text-align: center'> Quantidade de Restaurantes por Pais </h3>", unsafe_allow_html=True)
+    corpo = mk.aling(h = 'h4', text= 'Quantidade de Restaurante por Pais')
+    st.markdown(corpo, unsafe_allow_html=True)
     cols = ['country_name', 'restaurant_id']
     aux = df1.loc[:,cols].groupby('country_name').count().sort_values( by= 'restaurant_id',ascending=False).head(10).reset_index().head()
     bar = px.bar(aux, x = 'country_name', y = 'restaurant_id',
