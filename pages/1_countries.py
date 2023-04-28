@@ -66,3 +66,19 @@ with st.container():
                     'city': 'Qtd de Cidades'
                 })
     st.plotly_chart(bar, use_container_width= True)
+
+with st.container():
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        corpo = mk.aling('h5', text= 'Quantidade de Avaliações feitas por Pais')
+        st.markdown(corpo, unsafe_allow_html= True)
+        cols = ['country_name','votes']
+        aux = df1.loc[:,cols].groupby('country_name').mean().sort_values(by = 'votes', ascending= False).reset_index().head(5)
+        bar = px.bar(aux, x = 'country_name', y = 'votes',
+                labels= {
+                    'country_name': 'Pais',
+                    'votes': 'Quantidade de Avaliações'
+                }) 
+        st.plotly_chart(bar, use_container_width= True)
+        
