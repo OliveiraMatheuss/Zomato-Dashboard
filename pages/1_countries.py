@@ -52,3 +52,17 @@ with st.container():
             }
             )
     st.plotly_chart(bar, use_container_width= True)
+    
+with st.container():
+    corpo = mk.aling(h = 'h4', text = 'Quantidade de Cidades por Pais')
+    st.markdown(corpo, unsafe_allow_html= True)    
+    
+    cols = ['country_name','city','restaurant_id']
+    aux = df1.loc[:,cols].groupby(['country_name', 'city']).count().reset_index()
+    aux = aux.loc[:,['country_name', 'city']].groupby('country_name').count().sort_values(by = 'city',ascending=False).reset_index().head()
+    bar = px.bar(aux, x = 'country_name', y = 'city',
+                labels={
+                    'country_name' : 'Pais',
+                    'city': 'Qtd de Cidades'
+                })
+    st.plotly_chart(bar, use_container_width= True)
