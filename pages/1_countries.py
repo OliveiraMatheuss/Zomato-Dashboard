@@ -82,3 +82,16 @@ with st.container():
                 }) 
         st.plotly_chart(bar, use_container_width= True)
         
+    with col2:
+        corpo = mk.aling(h = 'h5', text= 'Média de Preço por um prato para duas pessoas')
+        st.markdown(corpo, unsafe_allow_html= True)
+        cols = ['country_name', 'average_cost_for_two']
+        aux = df1[cols].groupby('country_name').mean('average_cost_for_two')
+        aux = aux.reset_index()
+        aux = aux.sort_values(by = 'average_cost_for_two', ascending= False).head()
+        bar = px.bar(aux, x = 'country_name', y = 'average_cost_for_two', 
+                labels ={
+                        'country_name': 'Pais',
+                        'average_cost_for_two': 'Preço Médio'
+                } )
+        st.plotly_chart(bar, use_container_width= True)
