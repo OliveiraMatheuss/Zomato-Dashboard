@@ -54,7 +54,7 @@ with st.container():
     st.plotly_chart(bar, use_container_width= True)
     
 with st.container():
-    corpo = mk.aling(h = 'h4', text = 'Quantidade de Cidades por Pais')
+    corpo = mk.aling(h = 'h4', text = 'Quantidade de Cidades Avaliadas por Pais')
     st.markdown(corpo, unsafe_allow_html= True)    
     
     cols = ['country_name','city','restaurant_id']
@@ -95,3 +95,33 @@ with st.container():
                         'average_cost_for_two': 'Preço Médio'
                 } )
         st.plotly_chart(bar, use_container_width= True)
+        
+with st.container():
+    mk.aling('h5', text = 'Paises com a maior Avaliação Média')
+    corpo = mk.aling('h5', text = 'Paises com a menor Avaliação Média')
+    st.markdown(corpo, unsafe_allow_html= True)
+    cols = ['country_name', 'aggregate_rating']
+    aux = df1.loc[:,cols].groupby('country_name').mean('aggregate_rating')
+    aux = aux.reset_index()
+    aux = aux.sort_values(by = 'aggregate_rating',ascending = False).head(6)
+    bar = px.bar(aux, x = 'country_name', y = 'aggregate_rating',
+                labels= {
+                    'country_name': 'Pais',
+                    'aggregate_rating': 'Avaliação'
+                })
+    st.plotly_chart(bar)
+
+with st.container():
+    mk.aling('h5', text = 'Paises com a maior Avaliação Média')
+    corpo = mk.aling('h5', text = 'Paises com a menor Avaliação Média')
+    st.markdown(corpo, unsafe_allow_html= True)
+    cols = ['country_name', 'aggregate_rating']
+    aux = df1.loc[:,cols].groupby('country_name').mean('aggregate_rating')
+    aux = aux.reset_index()
+    aux = aux.sort_values(by = 'aggregate_rating')
+    bar = px.bar(aux, x = 'country_name', y = 'aggregate_rating',
+                labels= {
+                    'country_name': 'Pais',
+                    'aggregate_rating': 'Avaliação'
+                })
+    st.plotly_chart(bar, use_container_width= True)
