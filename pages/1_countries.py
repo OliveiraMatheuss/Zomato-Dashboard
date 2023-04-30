@@ -32,7 +32,7 @@ select_country_mult = st.sidebar.multiselect(label ='Escolha os Paises que Desej
 
 # filtros
 
-select_country = df1[df1['country_name'].isin(select_country_mult)]
+df1 = df1[df1['country_name'].isin(select_country_mult)]
 
 #==============================================================================================================#
 #====================================    LAYOUT      ==========================================================#
