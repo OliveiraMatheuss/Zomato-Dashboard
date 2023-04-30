@@ -41,31 +41,37 @@ select_country = df1[df1['country_name'].isin(select_country_mult)]
 st.header('🌎 Visão Paises')
 
 with st.container():
-    corpo = mk.aling(h = 'h4', text= 'Quantidade de Restaurante por Pais')
-    st.markdown(corpo, unsafe_allow_html=True)
-    cols = ['country_name', 'restaurant_id']
-    aux = df1.loc[:,cols].groupby('country_name').count().sort_values( by= 'restaurant_id',ascending=False).head(10).reset_index().head()
-    bar = px.bar(aux, x = 'country_name', y = 'restaurant_id',
-            labels= {
-                'country_name': 'Pais',
-                'restaurant_id': 'Qtd de Restaurantes'
-            }
-            )
-    st.plotly_chart(bar, use_container_width= True)
+    col1, col2 = st.columns(2)
+    with col1:
+        corpo = mk.aling(h = 'h4', text= 'Quantidade de Restaurante por Pais')
+        st.markdown(corpo, unsafe_allow_html=True)
+        cols = ['country_name', 'restaurant_id']
+        aux = df1.loc[:,cols].groupby('country_name').count().sort_values( by= 'restaurant_id',ascending=False).head(10).reset_index().head()
+        aux = aux.sort_values( by= 'restaurant_id',ascending=True)
+        bar = px.bar(aux, y = 'country_name', x = 'restaurant_id',
+                orientation= 'h',
+                labels= {
+                    'country_name': 'Pais',
+                    'restaurant_id': 'Qtd de Restaurantes'
+                }
+                )
+        st.plotly_chart(bar, use_container_width= True)
     
-with st.container():
-    corpo = mk.aling(h = 'h4', text = 'Quantidade de Cidades Avaliadas por Pais')
-    st.markdown(corpo, unsafe_allow_html= True)    
-    
-    cols = ['country_name','city','restaurant_id']
-    aux = df1.loc[:,cols].groupby(['country_name', 'city']).count().reset_index()
-    aux = aux.loc[:,['country_name', 'city']].groupby('country_name').count().sort_values(by = 'city',ascending=False).reset_index().head()
-    bar = px.bar(aux, x = 'country_name', y = 'city',
-                labels={
-                    'country_name' : 'Pais',
-                    'city': 'Qtd de Cidades'
-                })
-    st.plotly_chart(bar, use_container_width= True)
+    with col2:
+        corpo = mk.aling(h = 'h4', text = 'Quantidade de Cidades Avaliadas por Pais')
+        st.markdown(corpo, unsafe_allow_html= True)    
+        
+        cols = ['country_name','city','restaurant_id']
+        aux = df1.loc[:,cols].groupby(['country_name', 'city']).count().reset_index()
+        aux = aux.loc[:,['country_name', 'city']].groupby('country_name').count().sort_values(by = 'city',ascending=False).reset_index().head()
+        aux = aux.sort_values( by= 'city',ascending=True)
+        bar = px.bar(aux, y = 'country_name', x = 'city',
+                     orientation= 'h',
+                    labels={
+                        'country_name' : 'Pais',
+                        'city': 'Qtd de Cidades'
+                    })
+        st.plotly_chart(bar, use_container_width= True)
 
 with st.container():
     col1, col2 = st.columns(2)
@@ -109,7 +115,7 @@ with st.container():
                     'country_name': 'Pais',
                     'aggregate_rating': 'Avaliação'
                 })
-    st.plotly_chart(bar)
+    st.plotly_chart(bar, use_container_width= True)
 
 with st.container():
     mk.aling('h5', text = 'Paises com a maior Avaliação Média')
