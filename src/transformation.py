@@ -91,6 +91,6 @@ def limpeza(df1):
     df1['rating_color_name'] = df1['rating_color'].map(COLORS)
 
     #8. Removendo pratos que são iguais a zero
-    df1 = df1[(df1['average_cost_for_two'] != 0) & (df1['aggregate_rating'] !=0)]
+    #df1 = df1[(df1['average_cost_for_two'] != 0) & (df1['aggregate_rating'] !=0)]
     
     return df1
