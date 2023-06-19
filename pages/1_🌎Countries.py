@@ -1,19 +1,15 @@
 import pandas as pd
-import plotly.express as px
-import folium
+import utils.countryfunc as countryfunc
 import streamlit as st
-from streamlit_folium import folium_static
-import inflection
-from folium.plugins import MarkerCluster
-from millify import millify as mil
 from utils import transformation as ts
 from utils import markdown as mk
+
 
 
 st.set_page_config(page_title= 'Countries',
                     layout= 'wide')
 
-paleta_cores = ['#3e4934','#dcdcdc ','#dd2026 ', '#80ada0' ,'#a10800' ,'#ddbb66' ,'#ddaa33']
+
 
 #===============================================================================================================#
 #================================ CARGA DE DADOS E LIMPEZA =====================================================#
@@ -45,109 +41,60 @@ st.header('🌎 Visão Paises')
 with st.container():
     col1, col2 = st.columns(2)
     with col1:
+        #title
         corpo = mk.aling(h = 'h4', text= 'Quantidade de Restaurante por Pais')
         st.markdown(corpo, unsafe_allow_html=True)
-        cols = ['country_name', 'restaurant_id']
-        aux = df1.loc[:,cols].groupby('country_name').count().sort_values( by= 'restaurant_id',ascending=False).head(10).reset_index().head()
-        aux = aux.sort_values( by= 'restaurant_id',ascending=True)
-        bar = px.bar(aux, y = 'country_name', x = 'restaurant_id',
-                text_auto= '.2s',
-                orientation= 'h',
-                labels= {
-                    'country_name': 'Pais',
-                    'restaurant_id': 'Qtd de Restaurantes'
-                },
-                color= 'country_name',
-                color_discrete_sequence = paleta_cores
-                ) 
-        st.plotly_chart(bar, use_container_width= True)
+        
+        #plot
+        fig = countryfunc.restaurants(df1)
+        st.plotly_chart(fig, use_container_width= True)
     
     with col2:
+        #title
         corpo = mk.aling(h = 'h4', text = 'Quantidade de Cidades Avaliadas por Pais')
         st.markdown(corpo, unsafe_allow_html= True)    
         
-        cols = ['country_name','city','restaurant_id']
-        aux = df1.loc[:,cols].groupby(['country_name', 'city']).count().reset_index()
-        aux = aux.loc[:,['country_name', 'city']].groupby('country_name').count().sort_values(by = 'city',ascending=False).reset_index().head()
-        aux = aux.sort_values( by= 'city',ascending=True)
-        bar = px.bar(aux, y = 'country_name', x = 'city',
-                        text_auto= '.2s',
-                        orientation= 'h',
-                        labels={
-                                'country_name' : 'Pais',
-                                'city': 'Qtd de Cidades'},
-                        color= 'country_name',
-                        color_discrete_sequence = paleta_cores)
-        
-        st.plotly_chart(bar, use_container_width= True)
+        #plot
+        fig = countryfunc.city(df1)
+        st.plotly_chart(fig, use_container_width= True)
 
 with st.container():
-    col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2)
     
-    with col1:
-        corpo = mk.aling('h5', text= 'Quantidade de Avaliações feitas por Pais')
+        with col1:
+        
+                #title
+                corpo = mk.aling('h5', text= 'Quantidade de Avaliações feitas por Pais')
+                st.markdown(corpo, unsafe_allow_html= True)
+                
+                #plot
+                
+                fig = countryfunc.votes(df1)
+                st.plotly_chart(fig, use_container_width= True)
+        
+        with col2:
+                #title
+                corpo = mk.aling(h = 'h5', text= 'Média de Preço por um prato para duas pessoas')
+                st.markdown(corpo, unsafe_allow_html= True)
+                
+                #plot
+                fig = countryfunc.price(df1)
+                st.plotly_chart(fig, use_container_width= True)
+        
+with st.container(): 
+
+        #title
+        corpo = mk.aling('h5', text = 'Paises com a maior Avaliação Média')
         st.markdown(corpo, unsafe_allow_html= True)
-        cols = ['country_name','votes']
-        aux = df1.loc[:,cols].groupby('country_name').mean().sort_values(by = 'votes', ascending= False).reset_index().head(5)
-        bar = px.bar(aux, x = 'country_name', y = 'votes',
-                        text_auto= '.2s',
-                        labels= {
-                                'country_name': 'Pais',
-                                'votes': 'Quantidade de Avaliações'},
-                        color= 'country_name',
-                        color_discrete_sequence = paleta_cores) 
         
-        st.plotly_chart(bar, use_container_width= True)
-        
-    with col2:
-        corpo = mk.aling(h = 'h5', text= 'Média de Preço por um prato para duas pessoas')
-        st.markdown(corpo, unsafe_allow_html= True)
-        cols = ['country_name', 'average_cost_for_two']
-        aux = df1[cols].groupby('country_name').mean('average_cost_for_two')
-        aux = aux.reset_index()
-        aux = aux.sort_values(by = 'average_cost_for_two', ascending= False).head()
-        bar = px.bar(aux, x = 'country_name', y = 'average_cost_for_two', 
-                        text_auto= '.2s',
-                        labels ={
-                                'country_name': 'Pais',
-                                'average_cost_for_two': 'Preço Médio'},
-                        color= 'country_name',
-                        color_discrete_sequence = paleta_cores)
-        
-        st.plotly_chart(bar, use_container_width= True)
-        
-with st.container():
-    mk.aling('h5', text = 'Paises com a maior Avaliação Média')
-    corpo = mk.aling('h5', text = 'Paises com a menor Avaliação Média')
-    st.markdown(corpo, unsafe_allow_html= True)
-    cols = ['country_name', 'aggregate_rating']
-    aux = df1.loc[:,cols].groupby('country_name').mean('aggregate_rating')
-    aux = aux.reset_index()
-    aux = aux.sort_values(by = 'aggregate_rating',ascending = False).head(6)
-    bar = px.bar(aux, x = 'country_name', y = 'aggregate_rating',
-                text_auto= '.2s',
-                labels= {
-                        'country_name': 'Pais',
-                        'aggregate_rating': 'Avaliação'},
-                color= 'country_name',
-                color_discrete_sequence = paleta_cores)
-    
-    st.plotly_chart(bar, use_container_width= True)
+        #plot
+        fig = countryfunc.aggregate_rating_higher(df1)
+        st.plotly_chart(fig, use_container_width= True) 
 
 with st.container():
-    mk.aling('h5', text = 'Paises com a meior Avaliação Média')
-    corpo = mk.aling('h5', text = 'Paises com a menor Avaliação Média')
-    st.markdown(corpo, unsafe_allow_html= True)
-    cols = ['country_name', 'aggregate_rating']
-    aux = df1.loc[:,cols].groupby('country_name').mean('aggregate_rating')
-    aux = aux.reset_index()
-    aux = aux.sort_values(by = 'aggregate_rating')
-    bar = px.bar(aux, x = 'country_name', y = 'aggregate_rating',
-                text_auto= '.2s',
-                labels= {
-                        'country_name': 'Pais',
-                        'aggregate_rating': 'Avaliação'},
-                color= 'country_name',
-                color_discrete_sequence = paleta_cores)
+        #title
+        corpo = mk.aling('h5', text = 'Paises com a menor Avaliação Média')
+        st.markdown(corpo, unsafe_allow_html= True)
     
-    st.plotly_chart(bar, use_container_width= True)
+        fig = countryfunc.aggregate_rating_lower(df1)
+        st.plotly_chart(fig, use_container_width= True)
