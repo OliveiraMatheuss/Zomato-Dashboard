@@ -1,13 +1,11 @@
 import pandas as pd
 import plotly.express as px
-import folium
+import utils.cuisinesfunc as cuisinesfunc
 import streamlit as st
-from streamlit_folium import folium_static
-import inflection
-from folium.plugins import MarkerCluster
-from millify import millify as mil
-from utils.transformation import metric_cuisine, limpeza
+from utils.transformation import limpeza
+from utils.cuisinesfunc import metric_cuisine
 from utils import markdown as mk
+
 
 st.set_page_config(page_title= 'Cuisines',
                     layout= 'wide')
@@ -25,7 +23,7 @@ df1 = limpeza(df)
 #==============================================================================================================#
 
 
-st.sidebar.title("Zotomato",)
+st.sidebar.title("Zomato",)
 st.sidebar.markdown('## Filtros')
 
 select_country_mult = st.sidebar.multiselect(label ='Escolha os Paises que Deseja visualizar as informações',
@@ -85,27 +83,18 @@ with st.container():
     col1, col2 = st.columns(2)
     
     with col1:
+        #title
         corpo = mk.aling(h = 'h4', text=f"Top {select_quant_restaurant} melhores tipos de culinárias" )
         st.markdown(corpo, unsafe_allow_html= True)
         
-        cols = ['cuisines', 'aggregate_rating']
-        aux = df1[cols].groupby('cuisines').mean('aggregate_rating').sort_values('aggregate_rating', ascending = False).reset_index().head(select_quant_restaurant)
-        bar = px.bar(aux, x = 'cuisines', y ='aggregate_rating',
-                labels= {
-                    'aggregate_rating': 'Avaliação',
-                    'cuisines': 'Culinária'
-                })
-        st.plotly_chart(bar, use_container_width= True)
+        #plot
+        
+        fig = cuisinesfunc.cuisines_higher(df1, select_quant_restaurant)
+        st.plotly_chart(fig, use_container_width= True)
         
     with col2:
         corpo = mk.aling(h = 'h4', text=f"Top {select_quant_restaurant} piores tipos de culinárias" )
         st.markdown(corpo, unsafe_allow_html= True)
         
-        cols = ['cuisines', 'aggregate_rating']
-        aux = df1[cols].groupby('cuisines').mean('aggregate_rating').sort_values('aggregate_rating', ascending = True).reset_index().head(select_quant_restaurant)
-        aux = aux[aux['aggregate_rating']> 0]
-        bar = px.bar(aux, x = 'cuisines', y ='aggregate_rating',
-                labels= {
-                    'aggregate_rating': 'Avaliação',
-                    'cuisines': 'Culinária'}, color_discrete_sequence= ['red'])        
-        st.plotly_chart(bar, use_container_width= True)
+        fig = cuisinesfunc.cuisines_lower(df1, select_quant_restaurant)   
+        st.plotly_chart(fig, use_container_width= True)
