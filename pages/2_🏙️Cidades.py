@@ -1,14 +1,9 @@
 import pandas as pd
-import plotly.express as px
-import folium
+import utils.cityfunc  as cityfunc 
 import streamlit as st
-from streamlit_folium import folium_static
-import inflection
-from folium.plugins import MarkerCluster
-from millify import millify as mil
 from utils import transformation as ts
 from utils import markdown as mk
-from utils import  countryfuc as ctf 
+
 
 st.set_page_config(page_title= 'Countries',
                     layout= 'wide')
@@ -42,67 +37,51 @@ df1 = df1[df1['country_name'].isin(select_country_mult)]
 
 
 st.header('🏙️ Cidades')
-
+ 
 with st.container():
-
+    # Title
     corpo = mk.aling(h = 'h4', text= 'Top 10 Cidades com maior quantidade de restaurantes')
     st.markdown(corpo, unsafe_allow_html=True)
     
+    #Grafico
+    fig = cityfunc.top_restaurants(df1)
+    st.plotly_chart(fig, use_container_width= True)
+    
+    #Separação
+    st.divider()
 
-    st.divider()       
 with st.container():
     col1, col2 = st.columns(2)
     
     with col1:
+        #title
+        
         corpo = mk.aling(h = 'h4', text= 'Cidades com restaurantes avaliados acima de 4')
         st.markdown(corpo, unsafe_allow_html=True)    
         
-        cols = ['city','restaurant_id', 'country_name']
-        aux = df1[df1['aggregate_rating'] > 4]
-        aux = aux.loc[:,cols].groupby(['country_name','city']).count().sort_values(by = 'restaurant_id', ascending= False).reset_index().head(10)
-        bar = px.bar(aux, x = 'city', y = 'restaurant_id', 
-                labels={
-                    'city': 'Cidade',
-                    'restaurant_id':'Quantidade de Restaurantes',
-                    'country_name':'Pais'
-                },
-                color= 'country_name',
-                color_discrete_sequence = paleta_cores)
+        #Grafico
 
-        st.plotly_chart(bar, use_container_width= True)
+        fig = cityfunc.rest_star_higher(df1)
+        st.plotly_chart(fig, use_container_width= True)
         
         
     with col2:
-        
+        #title
         corpo = mk.aling(h = 'h4', text= 'Cidades com restaurantes avaliados abaixo de 2.5')
         st.markdown(corpo, unsafe_allow_html=True)
         
-        cols = ['city','restaurant_id', 'country_name']
-        aux = df1[df1['aggregate_rating'] <= 2.5]
-        aux = aux.loc[:,cols].groupby(['country_name','city']).count().sort_values(by = 'restaurant_id', ascending= False).reset_index().head(15)
-        aux.columns = ['country_name','city', 'num_restaurantes']
-
-        bar = px.bar(aux, x = 'city', y = 'num_restaurantes', 
-                labels={
-                    'city': 'Cidade',
-                    'num_restaurantes':'Quantidade de Restaurantes',
-                    'country_name':'Pais'
-                },
-                color= 'country_name',
-                color_discrete_sequence = paleta_cores)
-        st.plotly_chart(bar, use_container_width= True)
+        #plot 
+        fig = cityfunc.rest_star_lower(df1) 
+        st.plotly_chart(fig, use_container_width= True)
         
 with st.container():
-    st.divider()      
+    st.divider()  
+    
+    #title     
     corpo = mk.aling(h = 'h4', text= 'Top 10 Cidades com a maior quantidade de topos de culinária ')
     st.markdown(corpo, unsafe_allow_html=True)
     
-    cols = ['city', 'cuisines', 'country_name']
-    aux = df1[cols].groupby(['city', 'country_name']).nunique().sort_values(by='cuisines', ascending=False).reset_index().head(10)
-    bar = px.bar(aux, x='city', y='cuisines',
-                    labels= {'cuisines': 'Culinária', 'country_name': 'Pais', 'city': 'Cidade'},
-                    color= 'country_name',
-                    color_discrete_sequence = paleta_cores)
-
-    st.plotly_chart(bar, use_container_width= True)
+    #plot
+    fig = cityfunc.top_cuisines(df1)
+    st.plotly_chart(fig, use_container_width= True)
 
