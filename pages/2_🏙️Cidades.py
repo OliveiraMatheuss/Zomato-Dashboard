@@ -8,7 +8,16 @@ from utils import markdown as mk
 st.set_page_config(page_title= 'Countries',
                     layout= 'wide')
 
-paleta_cores = ['#3e4934','#dcdcdc ','#dd2026 ', '#80ada0' ,'#a10800' ,'#ddbb66' ,'#ddaa33']
+cores_paises = {'Philippines': '#FED141',
+                        'Brazil': '#009739',
+                        'Australia': '#012169', 
+                        'United States of America': '#B31942',
+                        'Singapore': '#C73b3C',
+                        'United Arab Emirates': '#000000',
+                        'India': '#FF671F',
+                        'England': '#CE1124',
+                        'South Africa': '#007749',
+                        'Sri Lanka': '#8D153A'}
 #===============================================================================================================#
 #================================ CARGA DE DADOS E LIMPEZA =====================================================#
 #===============================================================================================================#
@@ -44,7 +53,7 @@ with st.container():
     st.markdown(corpo, unsafe_allow_html=True)
     
     #Grafico
-    fig = cityfunc.top_restaurants(df1)
+    fig = cityfunc.top_restaurants(df1, cores_paises= cores_paises)
     st.plotly_chart(fig, use_container_width= True)
     
     #Separação
@@ -61,7 +70,7 @@ with st.container():
         
         #Grafico
 
-        fig = cityfunc.rest_star_higher(df1)
+        fig = cityfunc.rest_star_higher(df1, cores_paises)
         st.plotly_chart(fig, use_container_width= True)
         
         
@@ -71,7 +80,7 @@ with st.container():
         st.markdown(corpo, unsafe_allow_html=True)
         
         #plot 
-        fig = cityfunc.rest_star_lower(df1) 
+        fig = cityfunc.rest_star_lower(df1, cores_paises) 
         st.plotly_chart(fig, use_container_width= True)
         
 with st.container():
@@ -82,6 +91,6 @@ with st.container():
     st.markdown(corpo, unsafe_allow_html=True)
     
     #plot
-    fig = cityfunc.top_cuisines(df1)
+    fig = cityfunc.top_cuisines(df1, cores_paises)
     st.plotly_chart(fig, use_container_width= True)
 

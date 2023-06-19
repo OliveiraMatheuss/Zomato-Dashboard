@@ -10,7 +10,16 @@ st.set_page_config(page_title= 'Countries',
                     layout= 'wide')
 
 
-
+cores_paises = {'Philippines': '#FED141',
+                        'Brazil': '#009739',
+                        'Australia': '#012169', 
+                        'United States of America': '#B31942',
+                        'Singapore': '#C73b3C',
+                        'United Arab Emirates': '#000000',
+                        'India': '#FF671F',
+                        'England': '#CE1124',
+                        'South Africa': '#007749',
+                        'Sri Lanka': '#8D153A'}
 #===============================================================================================================#
 #================================ CARGA DE DADOS E LIMPEZA =====================================================#
 #===============================================================================================================#
@@ -46,7 +55,7 @@ with st.container():
         st.markdown(corpo, unsafe_allow_html=True)
         
         #plot
-        fig = countryfunc.restaurants(df1)
+        fig = countryfunc.restaurants(df1, cores_paises)
         st.plotly_chart(fig, use_container_width= True)
     
     with col2:
@@ -55,7 +64,7 @@ with st.container():
         st.markdown(corpo, unsafe_allow_html= True)    
         
         #plot
-        fig = countryfunc.city(df1)
+        fig = countryfunc.city(df1, cores_paises)
         st.plotly_chart(fig, use_container_width= True)
 
 with st.container():
@@ -69,7 +78,7 @@ with st.container():
                 
                 #plot
                 
-                fig = countryfunc.votes(df1)
+                fig = countryfunc.votes(df1, cores_paises)
                 st.plotly_chart(fig, use_container_width= True)
         
         with col2:
@@ -78,7 +87,7 @@ with st.container():
                 st.markdown(corpo, unsafe_allow_html= True)
                 
                 #plot
-                fig = countryfunc.price(df1)
+                fig = countryfunc.price(df1, cores_paises)
                 st.plotly_chart(fig, use_container_width= True)
         
 with st.container(): 
@@ -88,7 +97,7 @@ with st.container():
         st.markdown(corpo, unsafe_allow_html= True)
         
         #plot
-        fig = countryfunc.aggregate_rating_higher(df1)
+        fig = countryfunc.aggregate_rating_higher(df1, cores_paises)
         st.plotly_chart(fig, use_container_width= True) 
 
 with st.container():
@@ -96,5 +105,5 @@ with st.container():
         corpo = mk.aling('h5', text = 'Paises com a menor Avaliação Média')
         st.markdown(corpo, unsafe_allow_html= True)
     
-        fig = countryfunc.aggregate_rating_lower(df1)
+        fig = countryfunc.aggregate_rating_lower(df1, cores_paises)
         st.plotly_chart(fig, use_container_width= True)
