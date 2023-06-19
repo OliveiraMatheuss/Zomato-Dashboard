@@ -6,12 +6,14 @@ from streamlit_folium import folium_static
 import inflection
 from folium.plugins import MarkerCluster
 from millify import millify as mil
-from src import transformation as ts
-from src import markdown as mk
+from utils import transformation as ts
+from utils import markdown as mk
+
 
 st.set_page_config(page_title= 'Countries',
                     layout= 'wide')
 
+paleta_cores = ['#3e4934','#dcdcdc ','#dd2026 ', '#80ada0' ,'#a10800' ,'#ddbb66' ,'#ddaa33']
 
 #===============================================================================================================#
 #================================ CARGA DE DADOS E LIMPEZA =====================================================#
@@ -25,7 +27,7 @@ df1 = ts.limpeza(df)
 #==============================================================================================================#
 
 
-st.sidebar.title("Fome Zero",)
+st.sidebar.title("Zomato",)
 st.sidebar.markdown('## Filtros')
 
 select_country_mult = st.sidebar.multiselect(label ='Escolha os Paises que Deseja visualizar os Restaurantes', options = df1.country_name.unique(), default= df1.country_name.unique())
@@ -49,12 +51,15 @@ with st.container():
         aux = df1.loc[:,cols].groupby('country_name').count().sort_values( by= 'restaurant_id',ascending=False).head(10).reset_index().head()
         aux = aux.sort_values( by= 'restaurant_id',ascending=True)
         bar = px.bar(aux, y = 'country_name', x = 'restaurant_id',
+                text_auto= '.2s',
                 orientation= 'h',
                 labels= {
                     'country_name': 'Pais',
                     'restaurant_id': 'Qtd de Restaurantes'
-                }
-                )
+                },
+                color= 'country_name',
+                color_discrete_sequence = paleta_cores
+                ) 
         st.plotly_chart(bar, use_container_width= True)
     
     with col2:
@@ -66,11 +71,14 @@ with st.container():
         aux = aux.loc[:,['country_name', 'city']].groupby('country_name').count().sort_values(by = 'city',ascending=False).reset_index().head()
         aux = aux.sort_values( by= 'city',ascending=True)
         bar = px.bar(aux, y = 'country_name', x = 'city',
-                     orientation= 'h',
-                    labels={
-                        'country_name' : 'Pais',
-                        'city': 'Qtd de Cidades'
-                    })
+                        text_auto= '.2s',
+                        orientation= 'h',
+                        labels={
+                                'country_name' : 'Pais',
+                                'city': 'Qtd de Cidades'},
+                        color= 'country_name',
+                        color_discrete_sequence = paleta_cores)
+        
         st.plotly_chart(bar, use_container_width= True)
 
 with st.container():
@@ -82,10 +90,13 @@ with st.container():
         cols = ['country_name','votes']
         aux = df1.loc[:,cols].groupby('country_name').mean().sort_values(by = 'votes', ascending= False).reset_index().head(5)
         bar = px.bar(aux, x = 'country_name', y = 'votes',
-                labels= {
-                    'country_name': 'Pais',
-                    'votes': 'Quantidade de Avaliações'
-                }) 
+                        text_auto= '.2s',
+                        labels= {
+                                'country_name': 'Pais',
+                                'votes': 'Quantidade de Avaliações'},
+                        color= 'country_name',
+                        color_discrete_sequence = paleta_cores) 
+        
         st.plotly_chart(bar, use_container_width= True)
         
     with col2:
@@ -96,10 +107,13 @@ with st.container():
         aux = aux.reset_index()
         aux = aux.sort_values(by = 'average_cost_for_two', ascending= False).head()
         bar = px.bar(aux, x = 'country_name', y = 'average_cost_for_two', 
-                labels ={
-                        'country_name': 'Pais',
-                        'average_cost_for_two': 'Preço Médio'
-                } )
+                        text_auto= '.2s',
+                        labels ={
+                                'country_name': 'Pais',
+                                'average_cost_for_two': 'Preço Médio'},
+                        color= 'country_name',
+                        color_discrete_sequence = paleta_cores)
+        
         st.plotly_chart(bar, use_container_width= True)
         
 with st.container():
@@ -111,14 +125,17 @@ with st.container():
     aux = aux.reset_index()
     aux = aux.sort_values(by = 'aggregate_rating',ascending = False).head(6)
     bar = px.bar(aux, x = 'country_name', y = 'aggregate_rating',
+                text_auto= '.2s',
                 labels= {
-                    'country_name': 'Pais',
-                    'aggregate_rating': 'Avaliação'
-                })
+                        'country_name': 'Pais',
+                        'aggregate_rating': 'Avaliação'},
+                color= 'country_name',
+                color_discrete_sequence = paleta_cores)
+    
     st.plotly_chart(bar, use_container_width= True)
 
 with st.container():
-    mk.aling('h5', text = 'Paises com a maior Avaliação Média')
+    mk.aling('h5', text = 'Paises com a meior Avaliação Média')
     corpo = mk.aling('h5', text = 'Paises com a menor Avaliação Média')
     st.markdown(corpo, unsafe_allow_html= True)
     cols = ['country_name', 'aggregate_rating']
@@ -126,8 +143,11 @@ with st.container():
     aux = aux.reset_index()
     aux = aux.sort_values(by = 'aggregate_rating')
     bar = px.bar(aux, x = 'country_name', y = 'aggregate_rating',
+                text_auto= '.2s',
                 labels= {
-                    'country_name': 'Pais',
-                    'aggregate_rating': 'Avaliação'
-                })
+                        'country_name': 'Pais',
+                        'aggregate_rating': 'Avaliação'},
+                color= 'country_name',
+                color_discrete_sequence = paleta_cores)
+    
     st.plotly_chart(bar, use_container_width= True)

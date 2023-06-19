@@ -6,8 +6,8 @@ from streamlit_folium import folium_static
 import inflection
 from folium.plugins import MarkerCluster
 from millify import millify as mil
-from src.transformation import metric_cuisine, limpeza
-from src import markdown as mk
+from utils.transformation import metric_cuisine, limpeza
+from utils import markdown as mk
 
 st.set_page_config(page_title= 'Cuisines',
                     layout= 'wide')
@@ -107,6 +107,5 @@ with st.container():
         bar = px.bar(aux, x = 'cuisines', y ='aggregate_rating',
                 labels= {
                     'aggregate_rating': 'Avaliação',
-                    'cuisines': 'Culinária'
-                })
+                    'cuisines': 'Culinária'}, color_discrete_sequence= ['red'])        
         st.plotly_chart(bar, use_container_width= True)

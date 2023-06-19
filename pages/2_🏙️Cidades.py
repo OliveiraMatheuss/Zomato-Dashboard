@@ -6,13 +6,14 @@ from streamlit_folium import folium_static
 import inflection
 from folium.plugins import MarkerCluster
 from millify import millify as mil
-from src import transformation as ts
-from src import markdown as mk
+from utils import transformation as ts
+from utils import markdown as mk
+from utils import  countryfuc as ctf 
 
 st.set_page_config(page_title= 'Countries',
                     layout= 'wide')
 
-
+paleta_cores = ['#3e4934','#dcdcdc ','#dd2026 ', '#80ada0' ,'#a10800' ,'#ddbb66' ,'#ddaa33']
 #===============================================================================================================#
 #================================ CARGA DE DADOS E LIMPEZA =====================================================#
 #===============================================================================================================#
@@ -25,7 +26,7 @@ df1 = ts.limpeza(df)
 #==============================================================================================================#
 
 
-st.sidebar.title("Fome Zero",)
+st.sidebar.title("Zomato",)
 st.sidebar.markdown('## Filtros')
 
 select_country_mult = st.sidebar.multiselect(label ='Escolha os Paises que Deseja visualizar os Restaurantes',
@@ -47,15 +48,7 @@ with st.container():
     corpo = mk.aling(h = 'h4', text= 'Top 10 Cidades com maior quantidade de restaurantes')
     st.markdown(corpo, unsafe_allow_html=True)
     
-    cols = ['restaurant_id', 'city', 'country_name']
-    aux = df1.loc[:,cols].groupby(['country_name','city']).count().sort_values(by = 'restaurant_id', ascending= False).reset_index().head(10)
-    bar = px.bar(aux, x = 'city', y = 'restaurant_id', 
-        labels= {
-            'city': 'Cidade',
-            'restaurant_id':  'Qte de restaurantes',
-            'country_name': 'Pais'}
-        )
-    st.plotly_chart(bar, use_container_width= True)
+
     st.divider()       
 with st.container():
     col1, col2 = st.columns(2)
@@ -72,7 +65,10 @@ with st.container():
                     'city': 'Cidade',
                     'restaurant_id':'Quantidade de Restaurantes',
                     'country_name':'Pais'
-                }) 
+                },
+                color= 'country_name',
+                color_discrete_sequence = paleta_cores)
+
         st.plotly_chart(bar, use_container_width= True)
         
         
@@ -91,7 +87,9 @@ with st.container():
                     'city': 'Cidade',
                     'num_restaurantes':'Quantidade de Restaurantes',
                     'country_name':'Pais'
-                })
+                },
+                color= 'country_name',
+                color_discrete_sequence = paleta_cores)
         st.plotly_chart(bar, use_container_width= True)
         
 with st.container():
@@ -101,7 +99,10 @@ with st.container():
     
     cols = ['city', 'cuisines', 'country_name']
     aux = df1[cols].groupby(['city', 'country_name']).nunique().sort_values(by='cuisines', ascending=False).reset_index().head(10)
-    bar = px.bar(aux, x='city', y='cuisines')
+    bar = px.bar(aux, x='city', y='cuisines',
+                    labels= {'cuisines': 'Culinária', 'country_name': 'Pais', 'city': 'Cidade'},
+                    color= 'country_name',
+                    color_discrete_sequence = paleta_cores)
 
     st.plotly_chart(bar, use_container_width= True)
 
