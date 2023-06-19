@@ -3,16 +3,7 @@ import streamlit as st
 
 
 
-def metric_cuisine(df1, culinaria):
-        cuisine_aux = cuisines_ratting(df = df1, cuisine= culinaria, ascending= False).head(1)
-        st.metric(label = f"{culinaria}: {cuisine_aux['restaurant_name'].values[0]}\n",
-                    value= f"{cuisine_aux['aggregate_rating'].values[0]}/5.0",
-                    help = f"""
-                    País: {cuisine_aux['country_name'].values[0]}\n
-                    Cidade: {cuisine_aux['city'].values[0]}\n
-                    Média Prato para dois: {cuisine_aux['average_cost_for_two'].values[0]}\n
-                    """)
-        return 
+
 
 def rename_columns(dataframe):
     
@@ -41,9 +32,6 @@ def create_price_tye(price_range):
     else:
         return "gourmet"
 
-def cuisines_ratting(df, cuisine, ascending = True):
-    cols = ['restaurant_name', 'country_name', 'aggregate_rating']
-    df = df[df.cuisines.isin([cuisine])]
 
     return df.sort_values('aggregate_rating', ascending= ascending)
 
