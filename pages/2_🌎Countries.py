@@ -45,13 +45,13 @@ df1 = df1[df1['country_name'].isin(select_country_mult)]
 #====================================    LAYOUT      ==========================================================#
 #==============================================================================================================#
 
-st.header('🌎 Visão Paises')
+st.header('🌎 Visão Países')
 
 with st.container():
     col1, col2 = st.columns(2)
     with col1:
         #title
-        corpo = mk.aling(h = 'h4', text= 'Quantidade de Restaurante por Pais')
+        corpo = mk.aling(h = 'h4', text= 'Quantidade de Restaurante por País')
         st.markdown(corpo, unsafe_allow_html=True)
         
         #plot
@@ -60,7 +60,7 @@ with st.container():
     
     with col2:
         #title
-        corpo = mk.aling(h = 'h4', text = 'Quantidade de Cidades Avaliadas por Pais')
+        corpo = mk.aling(h = 'h4', text = 'Quantidade de Cidades Avaliadas por País')
         st.markdown(corpo, unsafe_allow_html= True)    
         
         #plot
@@ -73,7 +73,7 @@ with st.container():
         with col1:
         
                 #title
-                corpo = mk.aling('h5', text= 'Quantidade de Avaliações feitas por Pais')
+                corpo = mk.aling('h5', text= 'Quantidade de Avaliações feitas por País')
                 st.markdown(corpo, unsafe_allow_html= True)
                 
                 #plot

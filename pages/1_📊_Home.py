@@ -7,7 +7,6 @@ import plotly.express as px
 import folium
 import streamlit as st
 from streamlit_folium import folium_static
-import inflection
 from folium.plugins import MarkerCluster
 from millify import millify as mil
 from utils import transformation as ts

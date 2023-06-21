@@ -20,7 +20,8 @@ def top_restaurants(df1, cores_paises):
     fig = px.bar(aux, x = 'city', y = 'restaurant_id', 
             labels= {
                 'city': 'Cidade',
-                'restaurant_id':  'Qte de restaurantes'},
+                'restaurant_id':  'Qte de restaurantes',
+                'country_name': 'País'},
         color= 'country_name',
         color_discrete_map= cores_paises)
     fig.update_layout(xaxis={'categoryorder':'total descending'})
@@ -35,7 +36,7 @@ def rest_star_higher(df1, cores_paises):
                 labels={
                     'city': 'Cidade',
                     'restaurant_id':'Quantidade de Restaurantes',
-                    'country_name':'Pais'
+                    'country_name':'País'
                 },
                 color= 'country_name',
                 color_discrete_map= cores_paises)
@@ -52,7 +53,7 @@ def rest_star_lower(df1, cores_paises):
                 labels={
                     'city': 'Cidade',
                     'num_restaurantes':'Quantidade de Restaurantes',
-                    'country_name':'Pais'
+                    'country_name':'País'
                 },
                 color= 'country_name',
                 color_discrete_map= cores_paises)
@@ -63,7 +64,7 @@ def top_cuisines(df1, cores_paises):
     cols = ['city', 'cuisines', 'country_name']
     aux = df1[cols].groupby(['city', 'country_name']).nunique().sort_values(by='cuisines', ascending=False).reset_index().head(10)
     fig = px.bar(aux, x='city', y='cuisines',
-                    labels= {'cuisines': 'Culinária', 'country_name': 'Pais', 'city': 'Cidade'},
+                    labels= {'cuisines': 'Culinária', 'country_name': 'País', 'city': 'Cidade'},
                     color= 'country_name',
                     color_discrete_map= cores_paises)
     fig.update_layout(xaxis={'categoryorder':'total descending'})
