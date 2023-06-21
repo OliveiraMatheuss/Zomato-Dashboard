@@ -23,6 +23,7 @@ def top_restaurants(df1, cores_paises):
                 'restaurant_id':  'Qte de restaurantes'},
         color= 'country_name',
         color_discrete_map= cores_paises)
+    fig.update_layout(xaxis={'categoryorder':'total descending'})
     return fig
 
 
@@ -38,6 +39,7 @@ def rest_star_higher(df1, cores_paises):
                 },
                 color= 'country_name',
                 color_discrete_map= cores_paises)
+    fig.update_layout(xaxis={'categoryorder':'total descending'})
     return fig
 
 def rest_star_lower(df1, cores_paises):
@@ -54,6 +56,7 @@ def rest_star_lower(df1, cores_paises):
                 },
                 color= 'country_name',
                 color_discrete_map= cores_paises)
+    fig.update_layout(xaxis={'categoryorder':'total ascending'})
     return fig
 
 def top_cuisines(df1, cores_paises):
@@ -63,5 +66,6 @@ def top_cuisines(df1, cores_paises):
                     labels= {'cuisines': 'Culinária', 'country_name': 'Pais', 'city': 'Cidade'},
                     color= 'country_name',
                     color_discrete_map= cores_paises)
+    fig.update_layout(xaxis={'categoryorder':'total descending'})
     return fig
 

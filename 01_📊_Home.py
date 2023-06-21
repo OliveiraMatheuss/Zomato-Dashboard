@@ -66,7 +66,7 @@ st.sidebar.markdown('## Filtros')
 
 select_country_mult = st.sidebar.multiselect(label ='Escolha os Paises que Deseja visualizar os Restaurantes',
                                             options = df1.country_name.unique(),
-                                            default=  df1.country_name.sample(10).unique())
+                                            default=  df1.country_name.unique())
 
 # filtros
 
