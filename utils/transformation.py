@@ -2,7 +2,30 @@ import inflection
 import streamlit as st
 
 
+# Taxas de câmbio em relação ao dólar adiquidas no dia 21/06/2023
+taxas = {
+    'Botswana Pula(P)': 0.075,  
+    'Brazilian Real(R$)': 0.21,  
+    'Dollar($)': 1.0, 
+    'Emirati Diram(AED)': 0.27,  
+    'Indian Rupees(Rs.)': 0.012,  
+    'Indonesian Rupiah(IDR)': 0.000067,  
+    'NewZealand($)': 0.62,  
+    'Pounds(£)': 1.27,  
+    'Qatari Rial(QR)': 0.27,  
+    'Rand(R)': 0.054,  
+    'Sri Lankan Rupee(LKR)': 0.0032,  
+    'Turkish Lira(TL)': 0.42  
+}
 
+# Função para converter a moeda para dólar
+def converter_para_dolar(moeda, valor):
+    if moeda in taxas:
+        taxa = taxas[moeda]
+        valor_em_dolar = valor * taxa
+        return valor_em_dolar
+    else:
+        return None
 
 
 def rename_columns(dataframe):
@@ -91,6 +114,8 @@ def limpeza(df1):
     df1['rating_color_name'] = df1['rating_color'].map(COLORS)
 
     #8. Removendo pratos que são iguais a zero
-    #df1 = df1[(df1['average_cost_for_two'] != 0) & (df1['aggregate_rating'] !=0)]
+    df1 = df1[(df1['average_cost_for_two'] != 0) & (df1['aggregate_rating'] !=0)]
     
+    #9. Convertendo valores de average_cost_for_two para Dollar
+    df1['average_cost_for_two_dollar'] = df1[['average_cost_for_two', 'currency']].apply(lambda x: converter_para_dolar(x['currency'], x['average_cost_for_two'] ), axis = 1)    
     return df1
