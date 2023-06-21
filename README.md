@@ -1,3 +1,6 @@
+
+![Alt text](image/image.png)
+
 # 1. Contexto do Problema de Negócio
 Parabéns! Você acaba de ser contratado como Cientista de Dados da empresa
 Zomato, e a sua principal tarefa nesse momento é ajudar o CEO Kleiton Guerra
@@ -48,7 +51,24 @@ empresa e que sejam gerados dashboards, a partir dessas análises, para responde
 # 3. Premissas assumidas para a análise
 1.  Desconsiderado notas iguais a zero
 2.  Desconsiderado valor médio por prato para duas pessoas iguais a zero
-3.  Os valores dos pratos para duas pessoas estão dolarizados 
-O painel estratégico foi desenvolvido utilizando as métricas que refletem as 4 principais visões do modelo de negócio da empresa:
+3.  Os valores dos pratos para duas pessoas estão dolarizados utilizando a cotação do dia 21/06/2023
+4.  Esta sendo considerado que todos os clientes votaram para o calculo de receitas.
+5. O painel estratégico foi desenvolvido utilizando as métricas que refletem as 4 principais visões do modelo de negócio da empresa:
 
-# 4. Top 3 Insights de dados
+# 4. O produto Final do Projeto 
+ Painel online, hospedado em um Cloud e disponível para acesso em
+qualquer dispositivo conectado à internet.
+
+O painel pode ser acessado através desse link: https://oliveira-dashboard-zomato.streamlit.app/
+
+# 5. Conclusões
+O objetivo desse projeto é criar um conjunto de gráficos e/ou tabelas que
+exibam essas métricas da melhor forma possível para o CEO.
+
+Da visão Geral podemos ver que o principal mercado da Zomato está localizado nos Estados Unidos e India. 
+
+# 6. Próximo Passos
+
+1. Calcular a receita gerada por cada Pais
+2. Criar novos filtros
+3. Validar Hipóteses
