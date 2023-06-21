@@ -74,7 +74,7 @@ with st.container():
                         'city',
                         'cuisines',
                         'average_cost_for_two',
-                        'aggregate_rating']].sort_values(by= 'aggregate_rating', asceding = False).head(select_quant_restaurant), use_container_width= True)
+                        'aggregate_rating']].sort_values(by= 'aggregate_rating', ascending = False).head(select_quant_restaurant), use_container_width= True)
 
     st.markdown('---')
     
