@@ -10,9 +10,14 @@ import streamlit.components.v1 as components
 
 with st.sidebar:
     components.html("""
+<<<<<<< HEAD
                     <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="oliveiramatheuss" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/oliveiramatheuss?trk=profile-badge">Matheus Oliveira</a></div>
                     <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
                            
+=======
+                    <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="HORIZONTAL" data-vanity="oliveiramatheuss" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/oliveiramatheuss?trk=profile-badge">Matheus Oliveira</a></div>
+              
+>>>>>>> f4390e7ffe20d3f62ceeb7981c75b8aac403c8a8
               """, height= 310)
 
 
