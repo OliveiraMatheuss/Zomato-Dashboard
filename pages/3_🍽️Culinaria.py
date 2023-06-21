@@ -63,7 +63,7 @@ with st.container():
         metric_cuisine(df1, 'Japanese')
     with Brazilian:
         metric_cuisine(df1, 'Brazilian')
-    st.divider()
+    st.markdown('---')
 
 with st.container():
     
@@ -76,7 +76,7 @@ with st.container():
                         'average_cost_for_two',
                         'aggregate_rating']].sort_values(by= 'aggregate_rating').head(select_quant_restaurant), use_container_width= True)
 
-    st.divider()
+    st.markdown('---')
     
 with st.container():
     
