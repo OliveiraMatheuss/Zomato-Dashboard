@@ -28,12 +28,12 @@ st.sidebar.markdown('## Filtros')
 
 select_country_mult = st.sidebar.multiselect(label ='Escolha os Paises que Deseja visualizar as informações',
                                             options = df1.country_name.unique(), default= df1.country_name.unique())
-st.sidebar.divider()
+st.sidebar.markdown('---')
 
 select_quant_restaurant = st.sidebar.slider(label = 'Selecione a quantidade de restaurantes', 
                                             value = (10),
                                             max_value= 20)
-st.sidebar.divider()
+st.sidebar.markdown('---')
 
 select_cuisines_mult = st.sidebar.multiselect(label = 'Escolha os tipos de culinária',
                                             options = df1.cuisines.unique(),
