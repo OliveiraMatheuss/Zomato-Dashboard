@@ -56,7 +56,7 @@ def create_price_tye(price_range):
         return "gourmet"
 
 
-    return df.sort_values('aggregate_rating', ascending= ascending)
+
 
 def limpeza(df1):
     
@@ -117,5 +117,8 @@ def limpeza(df1):
     df1 = df1[(df1['average_cost_for_two'] != 0) & (df1['aggregate_rating'] !=0)]
     
     #9. Convertendo valores de average_cost_for_two para Dollar
-    df1['average_cost_for_two_dollar'] = df1[['average_cost_for_two', 'currency']].apply(lambda x: converter_para_dolar(x['currency'], x['average_cost_for_two'] ), axis = 1)    
+    df1['average_cost_for_two_dollar'] = df1[['average_cost_for_two', 'currency']].apply(lambda x: converter_para_dolar(x['currency'], x['average_cost_for_two'] ), axis = 1)
+    
+    #10. Excluir outiler
+    df1 = df1[df1['average_cost_for_two'] != 25000017.0]   
     return df1
