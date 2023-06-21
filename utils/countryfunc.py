@@ -50,15 +50,15 @@ def votes(df1,cores_paises):
     return fig
 
 def price(df1,cores_paises):
-    cols = ['country_name', 'average_cost_for_two']
-    aux = df1[cols].groupby('country_name').mean('average_cost_for_two')
+    cols = ['country_name', 'average_cost_for_two_dollar']
+    aux = df1[cols].groupby('country_name').mean('average_cost_for_two_dollar')
     aux = aux.reset_index()
-    aux = aux.sort_values(by = 'average_cost_for_two', ascending= False).head(10)
-    fig = px.bar(aux, x = 'country_name', y = 'average_cost_for_two', 
+    aux = aux.sort_values(by = 'average_cost_for_two_dollar', ascending= False).head(10)
+    fig = px.bar(aux, x = 'country_name', y = 'average_cost_for_two_dollar', 
                         text_auto= '.2s',
                         labels ={
                                 'country_name': 'Pais',
-                                'average_cost_for_two': 'Preço Médio'},
+                                'average_cost_for_two_dollar': 'Preço Médio'},
                         color= 'country_name',
                         color_discrete_map= cores_paises)
 

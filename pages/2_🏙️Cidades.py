@@ -57,7 +57,7 @@ with st.container():
     st.plotly_chart(fig, use_container_width= True)
     
     #Separação
-    st.divider()
+    st.markdown('---')
 
 with st.container():
     col1, col2 = st.columns(2)
@@ -84,7 +84,7 @@ with st.container():
         st.plotly_chart(fig, use_container_width= True)
         
 with st.container():
-    st.divider()  
+    st.markdown('---')  
     
     #title     
     corpo = mk.aling(h = 'h4', text= 'Top 10 Cidades com a maior quantidade de topos de culinária ')
