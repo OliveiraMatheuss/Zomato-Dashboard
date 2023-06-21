@@ -10,7 +10,6 @@ import streamlit.components.v1 as components
 
 with st.sidebar:
     components.html("""
-                    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
                     <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="HORIZONTAL" data-vanity="oliveiramatheuss" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/oliveiramatheuss?trk=profile-badge">Matheus Oliveira</a></div>
               
               """, height= 310)
@@ -91,5 +90,5 @@ st.markdown("""
                 1. Calcular a receita gerada por cada Pais
                 2. Criar novos filtros
                 3. Validar Hipóteses
-
+                <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 """)
