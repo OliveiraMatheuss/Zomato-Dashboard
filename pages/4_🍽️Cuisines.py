@@ -67,13 +67,11 @@ with st.container():
 
 with st.container():
     
-    st.title(f"Top {select_quant_restaurant} Restaurantes")
-    st.dataframe(df1[['restaurant_id',
-                        'restaurant_name',
+    st.title(f"Top {select_quant_restaurant} Restaurantes com Melhores Avaliações")
+    st.dataframe(df1[['restaurant_name',
                         'country_name',
                         'city',
                         'cuisines',
-                        'average_cost_for_two',
                         'aggregate_rating']].sort_values(by= 'aggregate_rating', ascending = False).head(select_quant_restaurant), use_container_width= True)
 
     st.markdown('---')
@@ -84,7 +82,7 @@ with st.container():
     
     with col1:
         #title
-        corpo = mk.aling(h = 'h4', text=f"Top {select_quant_restaurant} melhores tipos de culinárias" )
+        corpo = mk.aling(h = 'h4', text=f"Top {select_quant_restaurant}Tipos de Culinárias com as Melhores Avaliações" )
         st.markdown(corpo, unsafe_allow_html= True)
         
         #plot
@@ -93,7 +91,7 @@ with st.container():
         st.plotly_chart(fig, use_container_width= True)
         
     with col2:
-        corpo = mk.aling(h = 'h4', text=f"Top {select_quant_restaurant} piores tipos de culinárias" )
+        corpo = mk.aling(h = 'h4', text=f"Top {select_quant_restaurant} Tipos de Culinárias com as Piores Avaliações" )
         st.markdown(corpo, unsafe_allow_html= True)
         
         fig = cuisinesfunc.cuisines_lower(df1, select_quant_restaurant)   

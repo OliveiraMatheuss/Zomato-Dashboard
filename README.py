@@ -77,7 +77,7 @@ st.markdown("""
                 Painel online, hospedado em um Cloud e disponível para acesso em
                 qualquer dispositivo conectado à internet.
 
-                O painel pode ser acessado através desse link: https://oliveira-dashboard-zomato.streamlit.app/
+                O painel pode ser acessado através desse link: https://oliveira-dashboard-zomato.streamlit.app/Home
 
                 # 5. Conclusões
                 O objetivo desse projeto é criar um conjunto de gráficos e/ou tabelas que
@@ -88,6 +88,8 @@ st.markdown("""
                 # 6. Próximo Passos
 
                 1. Calcular a receita gerada por cada Pais
+                3. Desmembrar a culinária Others por pais
                 2. Criar novos filtros
                 3. Validar Hipóteses
+                
 """)

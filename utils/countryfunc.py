@@ -58,7 +58,7 @@ def price(df1,cores_paises):
                         text_auto= '.2s',
                         labels ={
                                 'country_name': 'Pais',
-                                'average_cost_for_two_dollar': 'Preço Médio'},
+                                'average_cost_for_two_dollar': 'Preço Médio [USD]'},
                         color= 'country_name',
                         color_discrete_map= cores_paises)
 

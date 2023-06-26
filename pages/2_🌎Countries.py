@@ -73,7 +73,7 @@ with st.container():
         with col1:
         
                 #title
-                corpo = mk.aling('h5', text= 'Quantidade de Avaliações feitas por País')
+                corpo = mk.aling('h5', text= 'Média das Avaliações Feitas por País')
                 st.markdown(corpo, unsafe_allow_html= True)
                 
                 #plot
@@ -83,7 +83,7 @@ with st.container():
         
         with col2:
                 #title
-                corpo = mk.aling(h = 'h5', text= 'Média de Preço por um prato para duas pessoas')
+                corpo = mk.aling(h = 'h5', text= 'Média de Preço por um Prato para Duas Pessoas em dolar')
                 st.markdown(corpo, unsafe_allow_html= True)
                 
                 #plot
